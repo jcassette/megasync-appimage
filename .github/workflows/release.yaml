@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: ${{ github.ref }}
           draft: false
           prerelease: false
 
@@ -46,6 +46,7 @@ jobs:
           upload_url: ${{ steps.create-release.outputs.upload_url }}
           asset_path: ./MEGAsync-x86_64.AppImage
           asset_name: MEGAsync-x86_64.AppImage
+          asset_content_type: application/octet-stream
 
       - name: Print URL
         run: |
