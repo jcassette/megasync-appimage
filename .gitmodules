@@ -1,0 +1,3 @@
+[submodule "MEGAsync"]
+	path = MEGAsync
+	url = https://github.com/meganz/MEGAsync.git
