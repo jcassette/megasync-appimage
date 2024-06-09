@@ -7,15 +7,15 @@
 
 set -o errexit -o nounset -o xtrace
 
+basedir="$(dirname $0)/.."
+
 # Configure the MEGA SDK
-cd MEGAsync/src/MEGASync/mega
+cd "${basedir}/MEGAsync/src/MEGASync/mega"
 ./autogen.sh
 ./configure
 
-cd -
-
 # Build the Desktop app
-cd MEGAsync/src
+cd "${basedir}/MEGAsync/src"
 qmake MEGASync/MEGASync.pro
 lrelease MEGASync/MEGASync.pro
 make -j $(nproc)

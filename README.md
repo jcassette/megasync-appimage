@@ -14,9 +14,9 @@ chmod +x MEGAsync-x86_64.AppImage
 
 ## License
 
-### megasync-appimage
+### megasync-appimage utils
 
-Refer to `UNLICENSE`
+Refer to `utils/UNLICENSE`
 
 ### MEGA Desktop Application
 

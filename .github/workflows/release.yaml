@@ -18,13 +18,13 @@ jobs:
           submodules: recursive
 
       - name: Install dependencies
-        run: ./dependencies.sh
+        run: ./utils/dependencies.sh
 
       - name: Build MEGAsync
-        run: ./build.sh
+        run: ./utils/build.sh
 
       - name: Create AppImage
-        run: ./package.sh
+        run: ./utils/package.sh
 
       - name: Create GitHub release
         id: create-release
