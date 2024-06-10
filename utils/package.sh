@@ -7,7 +7,8 @@
 
 set -o errexit -o nounset -o xtrace
 
-basedir="$(dirname $0)/.."
+mypath="$(realpath "$0")"
+basedir="$(dirname "$mypath")/.."
 
 appdir=$(mktemp -d -t megasync-appdir.XXXXXXXXXX)
 echo "$appdir"

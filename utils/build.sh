@@ -7,7 +7,8 @@
 
 set -o errexit -o nounset -o xtrace
 
-basedir="$(dirname $0)/.."
+mypath="$(realpath "$0")"
+basedir="$(dirname "$mypath")/.."
 
 # Configure the MEGA SDK
 cd "${basedir}/MEGAsync/src/MEGASync/mega"
