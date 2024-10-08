@@ -7,9 +7,9 @@
 
 set -o errexit -o nounset -o xtrace
 
-sudo apt-get -y update
+apt-get -y update
 
-sudo apt-get -y install --no-install-recommends \
+apt-get -y install --no-install-recommends \
     build-essential wget dh-autoreconf cdbs unzip libtool-bin pkg-config debhelper \
     qttools5-dev-tools qtbase5-dev qt5-qmake libqt5x11extras5-dev libqt5dbus5 \
     libqt5svg5-dev qtdeclarative5-dev qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qtquick-controls2 \

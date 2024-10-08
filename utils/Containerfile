@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: Unlicense
+
+FROM ubuntu:22.04
+
+COPY ./dependencies.sh /dependencies.sh
+
+RUN /dependencies.sh
+
+CMD /bin/bash
