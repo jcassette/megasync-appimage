@@ -10,7 +10,7 @@ set -o errexit -o nounset -o xtrace
 apt-get -y update
 
 apt-get -y install --no-install-recommends \
-    build-essential wget dh-autoreconf cdbs unzip libtool-bin pkg-config debhelper \
+    git build-essential wget dh-autoreconf cdbs unzip libtool-bin pkg-config debhelper \
     qttools5-dev-tools qtbase5-dev qt5-qmake libqt5x11extras5-dev libqt5dbus5 \
     libqt5svg5-dev qtdeclarative5-dev qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qtquick-controls2 \
     libcrypto++-dev libraw-dev libc-ares-dev libssl-dev sqlite3 libsqlite3-dev zlib1g-dev \
