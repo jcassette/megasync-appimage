@@ -1,16 +1,16 @@
-name: Release
+name: Main
 
 on:
   push:
+    branches:
+    - main
     tags:
     - 'v[0-9].*'
 
 jobs:
-  release:
-    name: Release
+  appimage-job:
+    name: AppImage Job
     runs-on: ubuntu-22.04
-    permissions:
-      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -25,6 +25,25 @@ jobs:
 
       - name: Create AppImage
         run: ./utils/package.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: appimage-artifact
+          path: ./MEGAsync-x86_64.AppImage
+
+  release-job:
+    name: Release Job
+    permissions:
+      contents: write
+    needs: appimage-job
+    if: ${{ github.ref_type == 'tag' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: appimage-artifact
 
       - name: Create GitHub release
         id: create-release
