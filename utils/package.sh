@@ -10,12 +10,13 @@ set -o errexit -o nounset -o xtrace
 mypath="$(realpath "$0")"
 basedir="$(dirname "$mypath")/.."
 
-appdir=$(mktemp -d -t megasync-appdir.XXXXXXXXXX)
-echo "$appdir"
+rm -rf "${basedir}/appdir"/*
 
-cd "${basedir}/MEGAsync/src"
-make install INSTALL_ROOT="$appdir"
+cmake --install "${basedir}/build" --prefix "${basedir}/appdir"
 
-cd "${basedir}"
-export QML_SOURCES_PATHS=MEGAsync/src
-./linuxdeploy/linuxdeploy-x86_64.AppImage --appdir "$appdir" --executable MEGAsync/src/megasync --plugin qt --output appimage
+export QML_SOURCES_PATHS="${basedir}/MEGAsync/src"
+export LD_LIBRARY_PATH="${basedir}/appdir/opt/megasync/lib"
+"${basedir}"/linuxdeploy/linuxdeploy-x86_64.AppImage \
+    --appdir "${basedir}/appdir" \
+    --plugin qt \
+    --output appimage

@@ -1,3 +1,6 @@
 [submodule "MEGAsync"]
 	path = MEGAsync
 	url = https://github.com/meganz/MEGAsync.git
+[submodule "vcpkg"]
+	path = vcpkg
+	url = https://github.com/microsoft/vcpkg

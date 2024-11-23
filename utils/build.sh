@@ -10,13 +10,12 @@ set -o errexit -o nounset -o xtrace
 mypath="$(realpath "$0")"
 basedir="$(dirname "$mypath")/.."
 
-# Configure the MEGA SDK
-cd "${basedir}/MEGAsync/src/MEGASync/mega"
-./autogen.sh
-./configure
+rm -rf "${basedir}/build"/*
 
-# Build the Desktop app
-cd "${basedir}/MEGAsync/src"
-qmake MEGASync/MEGASync.pro
-lrelease MEGASync/MEGASync.pro
-make -j $(nproc)
+cmake \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D VCPKG_ROOT="${basedir}/vcpkg" \
+    -S "${basedir}/MEGAsync" \
+    -B "${basedir}/build"
+
+cmake --build "${basedir}/build" --target MEGAsync --parallel $(nproc)

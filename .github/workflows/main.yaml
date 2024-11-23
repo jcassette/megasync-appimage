@@ -15,10 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           submodules: recursive
 
       - name: Install dependencies
-        run: ./utils/dependencies.sh
+        run: sudo ./utils/dependencies.sh
 
       - name: Build MEGAsync
         run: ./utils/build.sh
