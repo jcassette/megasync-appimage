@@ -14,7 +14,7 @@ rm -rf "${basedir}/appdir"/*
 
 cmake --install "${basedir}/build" --prefix "${basedir}/appdir"
 
-export QML_SOURCES_PATHS="${basedir}/MEGAsync/src"
+export QML_SOURCES_PATHS="${basedir}/megadesktop/src"
 export LD_LIBRARY_PATH="${basedir}/appdir/opt/megasync/lib"
 "${basedir}"/linuxdeploy/linuxdeploy-x86_64.AppImage \
     --appdir "${basedir}/appdir" \

@@ -1,3 +1,7 @@
+[submodule "megadesktop/src/MEGASync/mega"]
+        path = megadesktop/src/MEGASync/mega
+        url = https://github.com/meganz/sdk.git
+        branch = master
 [submodule "vcpkg"]
 	path = vcpkg
 	url = https://github.com/microsoft/vcpkg

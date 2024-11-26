@@ -14,8 +14,9 @@ rm -rf "${basedir}/build"/*
 
 cmake \
     -D CMAKE_BUILD_TYPE=Release \
+    -D ENABLE_DESIGN_TOKENS_IMPORTER=OFF \
     -D VCPKG_ROOT="${basedir}/vcpkg" \
-    -S "${basedir}/MEGAsync" \
+    -S "${basedir}/megadesktop" \
     -B "${basedir}/build"
 
 cmake --build "${basedir}/build" --target MEGAsync --parallel $(nproc)
