@@ -1,0 +1,46 @@
+nautilus-megasync (5.3.0) stable; urgency=low
+
+  * Bug fixes
+  * Update communication protocol with MEGA desktop app
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 10 Jun 2024 19:52:00 +0200
+nautilus-megasync (5.2.0) stable; urgency=low
+
+  * Bug fixes
+  * Update communication protocol with MEGA desktop app
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 10 May 2023 13:05:10 +0200
+
+nautilus-megasync (5.1.0) stable; urgency=low
+
+  * Support new nautilus extension API v4
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 25 Oct 2022 13:01:15 +0200
+
+nautilus-megasync (5.0.0) stable; urgency=low
+
+  * Change in version numbering
+  * Warnings were silenced for the Nautilus extension.
+  * Nautilus extension no longer renders stale overlays for disabled syncs.
+  * Compute the correct path to the MEGASync client sockets.
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 20 May 2020 13:05:10 +0200
+
+nautilus-megasync (1.1.0) stable; urgency=low
+
+  * Changed path in order to avoid the inclusion of the current path during the package creation.
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 10 Sep 2019 12:00:00 +0200
+
+nautilus-megasync (1.0.29) beta; urgency=low
+
+  * First Public Beta
+
+ -- Javier Serrano <js@mega.co.nz>  Wed, 27 Aug 2014 12:00:00 +0100
+
+nautilus-megasync (1.0) beta; urgency=low
+
+  * First Beta
+
+ -- Paul Ionkin <pi@mega.co.nz>  Mon, 28 Apr 2014 04:25:10 +0200
+

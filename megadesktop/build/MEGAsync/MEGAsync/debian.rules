@@ -1,0 +1,98 @@
+#!/usr/bin/make -f
+NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
+VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
+EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
+QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9\|Debian.* 10" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
+QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
+DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
+MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+DISTRO := $(shell lsb_release -ds)
+VER := $(shell lsb_release -rs)
+
+export VCPKG_DEFAULT_BINARY_CACHE := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "/opt/persistent/vcpkg_cache" || echo "")
+export PATH := $(shell [ -f /opt/cmake.tar.gz ] && echo "`pwd`/cmake_inst/bin:${PATH}" || echo "${PATH}")
+export CXXFLAGS := $(shell [ -n "${EXTRADEFINES}" ] && echo "${EXTRADEFINES} ${CXXFLAGS}" || echo "${CXXFLAGS}")
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2$(MEGA_BUILD_ID)\"/g" src/MEGASync/control/Version.h
+	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1$(MEGA_BUILD_ID)/g" src/MEGASync/control/Version.h
+	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian/changelog || :
+
+	if [ -f /opt/vcpkg.tar.gz ]; then           \
+		tar xzf /opt/vcpkg.tar.gz;              \
+		mkdir -p $(VCPKG_DEFAULT_BINARY_CACHE); \
+	fi
+
+	if [ -f /opt/cmake.tar.gz ]; then echo "8dc99be7ba94ad6e14256b049e396b40  /opt/cmake.tar.gz" | md5sum -c -; fi
+	if [ -f /opt/cmake.tar.gz ]; then     \
+		tar xzf /opt/cmake.tar.gz;        \
+		ln -s cmake-*-Linux* cmake_inst;  \
+	fi
+
+	cmake --version
+	cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
+	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
+	cmake --install $(CURDIR)/build_dir --prefix $(CURDIR)/install_dir
+
+	echo "fs.inotify.max_user_watches = 524288" > 99-megasync-inotify-limit.conf
+	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > 99-megasync-udev.rules
+	
+	sed -i "s#@DISTRO@#$(DISTRO)#g" debian/postinst
+	if [ -n "$(DEB_TESTING)" ]; then   							\
+		sed -i "s#@VERSION@#$(DEB_TESTING)#g" debian/postinst;	\
+	else                               							\
+		sed -i "s#@VERSION@#$(VER)#g" debian/postinst;        	\
+	fi
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+install: build
+	dh_auto_install --destdir=debian/megasync -- INSTALL_ROOT=$(CURDIR)/debian/megasync
+	dh_install install_dir/* /
+	dh_install 99-megasync-inotify-limit.conf /etc/sysctl.d/
+	dh_install 99-megasync-udev.rules /etc/udev/rules.d/
+
+# Build architecture-independent files here.
+binary-indep: build install
+	# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+	dh_installcron
+	dh_installman
+	dh_installinfo
+#	dh_undocumented
+	dh_installchangelogs
+	dh_link
+	dh_strip --dbg-package=megasync-dbg
+	dh_compress
+	dh_fixperms
+#	dh_makeshlibs
+	dh_installdeb
+#	dh_perl
+	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb $(DPKGXZ)
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
+

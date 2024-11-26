@@ -1,0 +1,32 @@
+nemo-megasync (5.3.0) stable; urgency=low
+
+  * Bug fixes
+  * Update communication protocol with MEGA desktop app
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 10 Jun 2024 19:52:00 +0200
+nemo-megasync (5.2.0) stable; urgency=low
+
+  * Bug fixes
+  * Update communication protocol with MEGA desktop app
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 10 May 2023 13:05:10 +0200
+ 
+ nemo-megasync (5.0.0) stable; urgency=low
+
+  * Change in version numbering
+  * Compute the correct path to the MEGASync client sockets.
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 20 May 2020 13:05:10 +0200
+
+nemo-megasync (1.0.29) beta; urgency=low
+
+  * First Public Beta
+
+ -- Javier Serrano <js@mega.co.nz>  Thu, 27 Aug 2014 12:00:00 +0100
+
+nemo-megasync (1.0) beta; urgency=low
+
+  * First Beta
+
+ -- Paul Ionkin <pi@mega.co.nz>  Mon, 28 Apr 2014 04:25:10 +0200
+
