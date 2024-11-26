@@ -1,0 +1,77 @@
+##
+ # @file build/MEGAsync/MEGAsync/PKGBUILD
+ # @brief script to generate package megasync for ArchLinux
+ #
+ # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+ #
+ # This file is part of the MEGA SDK - Client Access Engine.
+ #
+ # Applications using the MEGA API must present a valid application key
+ # and comply with the the rules set forth in the Terms of Service.
+ #
+ # The MEGA SDK is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ #
+ # @copyright Simplified (2-clause) BSD License.
+ #
+ # You should have received a copy of the license along with this
+ # program.
+##
+
+# Maintainer: Pablo Martin <pm@mega.nz>
+pkgname=nemo-megasync
+pkgver=EXT_VERSION
+pkgrel=`cat MEGA_BUILD_ID || echo "1"`
+epoch=
+pkgdesc="MEGA Desktop App plugin for Nemo"
+arch=('i686' 'x86_64')
+url=""
+license=() #TODO
+groups=()
+depends=('ca-certificates' 'megasync>=5.3.0' 'nemo')
+makedepends=('ca-certificates' 'qt5-tools' 'nemo')
+checkdepends=()
+optdepends=()
+provides=("nemo-megasync=${pkgver}")
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=megasync.install
+changelog= #TODO
+source=("./${pkgname}_$pkgver.tar.gz"
+)
+noextract=()
+md5sums=('MD5SUM') # generated with makepkg -g
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname-$pkgver"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	sed -i "s#update_cache.path = \$\$PWD#update_cache.path = \$\${HICOLOR}#g" MEGAShellExtNemo.pro
+	if [ 0$(pacman -Q nemo | awk '{print $NF}' | awk -F='-' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
+	 echo "NEWER NEMO REQUIRES SMALLER OVERLAY ICONS"
+	 for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
+	else
+	 echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"
+	 rm data/emblems/64x64/*smaller.png
+	fi    
+	qmake
+	make
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+#	make -k check  DESTDIR=$_bindir THE_RPM_BUILD_ROOT=$pkgdir
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+#	make install
+	#sed -i "s#gtk-update-icon-cache -f -t /#gtk-update-icon-cache -f -t \$(INSTALL_ROOT)/#g" Makefile
+	make install INSTALL_ROOT=$pkgdir
+}

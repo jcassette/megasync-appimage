@@ -1,0 +1,16 @@
+MEGA.pro.user
+MegaShellExt.sdf
+MegaShellExt.suo
+MegaShellExt.vcxproj.user
+Release
+x64
+Thumbs.db
+moc_*
+ui_*
+qrc_*
+*.autosave
+MEGASync/MEGAsync
+MEGACrashAnalyzer/MEGACrashAnalyzer
+.*.py
+archives
+/build-MEGASync*

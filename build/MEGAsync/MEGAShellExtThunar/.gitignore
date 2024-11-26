@@ -1,0 +1,6 @@
+thunar-megasync_*.tar.gz
+#generated files
+thunar-megasync_*.dsc
+thunar-megasync.spec
+debian.copyright
+PKGBUILD

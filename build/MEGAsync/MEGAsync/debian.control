@@ -1,0 +1,41 @@
+Source: megasync
+Section: Tools
+Priority: normal
+Maintainer: MEGA Linux Team <linux@mega.co.nz>
+Build-Depends:  debhelper,
+                libqt4-dev | qtbase5-dev | qt-mega,
+                libcrypto++-dev,
+                libc-ares-dev,
+                libssl-dev,
+                libsqlite3-dev,
+                libraw-dev,
+                zlib1g-dev,
+                libudev-dev,
+                libicu-dev,
+                wget,
+                libtool,
+                dh-autoreconf,
+                cdbs,
+                libqt4-dbus | libqt5dbus5 | qt-mega,
+                qtdeclarative5-dev | qt-mega,
+                qttools5-dev | qt-mega,
+                autoconf, autoconf-archive, nasm, cmake
+
+Package: megasync
+Architecture: any
+Depends: ${shlibs:Depends}, libc-ares2, apt-transport-https, gpg,
+         qml-module-qtquick-dialogs,
+         qml-module-qtquick-controls,
+         qml-module-qtquick-controls2
+Description: Get more control over your data
+  - Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
+  - Back up your computer with MEGA to automatically copy data to MEGA in real time and eliminate the risk of accidental data loss.
+  - Easily add, sort, search for, prioritise, pause, and cancel your uploads and downloads using our transfer manager.
+
+Package: megasync-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends:
+    megasync
+Description: debugging symbols for megasync

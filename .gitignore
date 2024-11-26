@@ -1,0 +1,97 @@
+Thumbs.db
+vcredist_x86.exe
+vcredist_x64.exe
+MegaSyncSetup*.exe
+Release_x86_64
+Release_x64
+Release_arm64
+installer_mac.sh
+MEGA.pro.user
+DesignTokensImporter
+.clang-format
+
+# executable on Linux
+src/MEGASync/megasync
+src/MEGASync/sdk/core
+src/MEGASync/3rdparty
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.lo
+*.pyc
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+*.so.1*
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Generated files
+Makefile
+*.swp
+*.tar.gz
+
+# tmp files
+*.swn
+*.swo
+
+# osc files
+.osc
+
+# ctags files
+tags
+
+#build stuff
+/src/MEGAShellExtDolphin/megasync-plugin-overlay.moc
+build-MEGA*
+build-cmake*
+build-x??-*/
+built64/
+built32/
+sign64/
+sign32/
+qt-deploy-*
+
+.vs
+
+CMakeLists.txt.user*
+CMakeSettings.json
+CMakeFiles
+CMakeCache.txt
+CMakeTmp
+CTestTestfile.cmake
+cmake_install.cmake
+*automoc*
+src/build-MEGASync-Desktop-*
+build/Desktop_Qt_*
+
+*.pro.user.*
+ecm_uninstall.cmake
+install_manifest.txt
+src/.qmake.stash
+
+*.orig
+*.rej
+
+/contrib/cmake/cmake-build-*
+*.stash
+*.Debug
+*.Release
+
+# qml
+*.qtds
+builds/

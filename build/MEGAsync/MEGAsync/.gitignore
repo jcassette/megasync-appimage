@@ -1,0 +1,6 @@
+megasync_*.tar.gz
+# generated files
+megasync.spec
+megasync*.dsc
+debian.copyright
+PKGBUILD
