@@ -7,7 +7,7 @@ This project is not verified by, affiliated with, or supported by MEGA Limited.
 ## Usage
 
 ```
-wget https://github.com/jcassette/megasync-appimage/releases/download/latest/MEGAsync-x86_64.AppImage
+wget https://github.com/jcassette/megasync-appimage/releases/latest/download/MEGAsync-x86_64.AppImage
 chmod +x MEGAsync-x86_64.AppImage
 ./MEGAsync-x86_64.AppImage
 ```
