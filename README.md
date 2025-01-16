@@ -4,10 +4,13 @@ AppImage builds of MEGA Sync Desktop App
 
 This project is not verified by, affiliated with, or supported by MEGA Limited.
 
+Builds are verifiable: https://github.com/jcassette/megasync-appimage/attestations
+
 ## Usage
 
 ```
 wget https://github.com/jcassette/megasync-appimage/releases/latest/download/MEGAsync-x86_64.AppImage
+gh attestation verify MEGAsync-x86_64.AppImage -R jcassette/megasync-appimage
 chmod +x MEGAsync-x86_64.AppImage
 ./MEGAsync-x86_64.AppImage
 ```
