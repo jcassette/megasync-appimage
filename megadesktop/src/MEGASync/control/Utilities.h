@@ -3,30 +3,36 @@
 
 #include "megaapi.h"
 #include "ThreadPool.h"
-#include <QString>
-#include <QHash>
-#include <QPixmap>
-#include <QProgressDialog>
+
 #include <QDesktopServices>
-#include <QFuture>
 #include <QDir>
+#include <QEasingCurve>
+#include <QEventLoop>
+#include <QFuture>
+#include <QHash>
 #include <QIcon>
 #include <QLabel>
-#include <QQueue>
-#include <QEventLoop>
 #include <QMetaEnum>
+#include <QPixmap>
+#include <QProgressDialog>
+#include <QQueue>
+#include <QString>
 #include <QTimer>
-
-#include <QEasingCurve>
+#include <sys/stat.h>
 
 #include <functional>
 
-#include <sys/stat.h>
-
 #ifdef __APPLE__
-#define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAsync", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
-                             chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
-                             chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+#define MEGA_SET_PERMISSIONS \
+chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAsync", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+chmod("/Applications/MEGAsync.app/Contents/MacOS/mega-desktop-app-gfxworker", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/" \
+      "MEGAShellExtFinder", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
 
 #define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
@@ -335,6 +341,7 @@ public:
     static const QString SUPPORT_URL;
     static const QString BACKUP_CENTER_URL;
     static const QString SYNC_SUPPORT_URL;
+    static const QString DESKTOP_APP_URL;
 
     static QString getSizeString(long long bytes);
     static QString getSizeStringLocalized(qint64 bytes);
@@ -390,6 +397,7 @@ public:
     //Check is current account is business (either business or flexi pro)
     static bool isBusinessAccount();
     static QFuture<bool> openUrl(QUrl url);
+    static void openAppDataPath();
     static void openInMega(mega::MegaHandle handle);
     static void openBackupCenter();
 
