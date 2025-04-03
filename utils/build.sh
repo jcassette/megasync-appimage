@@ -15,6 +15,7 @@ rm -rf "${basedir}/build"/*
 cmake \
     -D CMAKE_BUILD_TYPE=Release \
     -D ENABLE_DESIGN_TOKENS_IMPORTER=OFF \
+    -D ENABLE_DESKTOP_APP_TESTS=OFF \
     -D VCPKG_ROOT="${basedir}/vcpkg" \
     -S "${basedir}/megadesktop" \
     -B "${basedir}/build"
